@@ -1,0 +1,119 @@
+<!Doctype>
+<html>
+
+<head>
+    <link href="chat-widget-style.css" rel="stylesheet" />
+    <script src="lib/jquery-3.2.1.slim.min.js"></script>
+</head>
+
+<body>
+    <h1>I am chat</h1>
+    <!-- Chat bubble -->
+    <div id="chatbubble" class="chat-bubble-container chat-bg online active">
+        <div class="section">
+            <svg class="chat-interfaceIconFillColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h24v24H0V0z" fill="none"></path>
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"></path>
+            </svg>
+            <img src="http://supporthelpdesk.co/norton/img/banner-img-girl.png" />
+            <div class="message-count">5</div>
+        </div>
+    </div>
+    <!-- Chat window -->
+    <article id="chatwindow" class="chat-window-container">
+        <header>
+            <div class="avatar">
+                <img src="http://supporthelpdesk.co/norton/img/banner-img-girl.png" />
+            </div>
+            <div class="u-name">Singaravelan</div>
+            <div class="actions">
+                <div id="closeBtn" class="close"></div>
+            </div>
+            <div class="clear"></div>
+        </header>
+        <section>
+            <div class="msg">
+                <div class="msg-out">
+                    <div>
+                        <span class="tail-container"></span>
+                        <div class="bubble">
+                            <div class="msg-text">hi, how are you</div>
+                            <div class="msg-metadata"><span>10:00 pm</span></div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="msg">
+                <div class="msg-out">
+                    <div>
+                        <span class="tail-container"></span>
+                        <div class="bubble">
+                            <div class="msg-text">hi, how are you</div>
+                            <div class="msg-metadata"><span>10:00 pm</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="msg">
+                <div class="msg-in">
+                    <div>
+                        <span class="tail-container"></span>
+                        <div class="bubble">
+                            <div class="msg-text">I am very long text; I am very long text; I am very long text;</div>
+                            <div class="msg-metadata"><span>10:00 pm</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="msg">
+                <div class="msg-in">
+                    <div>
+                        <span class="tail-container"></span>
+                        <div class="bubble">
+                            <div class="msg-text">hi, how are you</div>
+                            <div class="msg-metadata"><span>10:00 pm</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="msg">
+                <div class="msg-out">
+                    <div>
+                        <span class="tail-container"></span>
+                        <div class="bubble">
+                            <div class="msg-text">I am very long text; I am very long text; I am very long text;</div>
+                            <div class="msg-metadata"><span>10:00 pm</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="msg">
+                    <div class="msg-in">
+                        <div>
+                            <span class="tail-container"></span>
+                            <div class="bubble">
+                                <div class="msg-text">I am short;</div>
+                                <div class="msg-metadata"><span>10:00 pm</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+        </section>
+        <footer>
+            <div class="smily"></div>
+            <input type="text" placeholder="send message" class="message-type" />
+        </footer>
+    </article>
+    <script src="chat-widget.js"></script>
+</body>
+
+</html>

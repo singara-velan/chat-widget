@@ -1,0 +1,252 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.chat-bubble-container {
+    padding: 18px;
+    border-radius: 50%;
+    margin: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.6);
+    width: 70px;
+    height: 70px;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: fixed;
+    bottom: -500px;
+    right: 0;
+    transition: bottom 2s linear;
+}
+
+.chat-bubble-container.active {
+    bottom: 0;
+    transition: unset;
+}
+
+.section {
+    position: relative;
+}
+
+.avatar {
+    display: inline-block;
+    background: white;
+    padding: 2px;
+    overflow: hidden;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.avatar img {
+    width: 40px;
+}
+.chat-window-container {
+    box-shadow: 0 5px 40px rgba(0,0,0,.16)!important;
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 350px;
+    right: -500px;
+    position: fixed;
+}
+.chat-window-container.active {
+    display: block;
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    z-index: 9999;
+    transition: right 2s ease-out;
+}
+.chat-window-container header {
+    padding: 10px;
+}
+
+.actions {
+    float: right;
+    margin-top: 8px;
+}
+
+.actions .close {
+    background: no-repeat url(//ssl.gstatic.com/chat/babble/sprites/common-517bca7f07a37c64c3263a1411e266a5.png) -159px -92px;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
+.u-name {
+    display: inline-block;
+    color: white;
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.msg {
+    margin-bottom: 10px;
+}
+
+.msg-out, .msg-in {
+    border-radius: 7.5px;
+    border-top-left-radius: 7.5px;
+    border-top-right-radius: 0px;
+    background-color: #dcf8c6;
+    float: right;
+    position: relative;
+    box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+}
+
+.msg-in {
+    background-color: #fff;
+    border-top-right-radius: 7.5px;
+    border-top-left-radius: 0px;
+    float: left;
+}
+
+.msg-out .tail-container- {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAmCAMAAADp2asXAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAADAUExURUxpcXmHa4maet/4yA0aDRMTE8fhsgAAAAAAAMDXrCsxJeX/z1xzXIiYetPsvGBsVUdPPuH8zOH8zNDrvMvmtrrOpwAAAAAAABUVFRoaGtnyxLTMozQ+MMfftFBeSR8nH5aoh6q/mW9+ZN/4yMjhtRwlHAAAAIOWd+r/06C1kkNLOwsLC9z4xur/0+n/0t76x9v4xeL9y+b/z+j/0d/7yeH8yuX/zeD8ytz5xt76yOP/zeH+y+b/zuD8yd35xuf/0MY9jkkAAAAsdFJOUwBvd/ATDZIBAsMp/At/11c9yPbizHoICQwT4bY1ykkgjahl6s8bBYT6nUAWOLbtFAAAAIhJREFUKM/tzbUWwlAURNFBE9zdg0NecLf//yvKUJyUdDnl7HXXletXqmXl9wPbQ9JCcC+VJsOj2mDwovzj3osjHGNFEVxNRAj7UR1hlx+I4FbuC8HkZBE8OwnRxamdFsEmUxCCGdoI51RLBK9xVwTvjyMEbzlDMJMp7lqseNc8YNc6CGyF/a0vcmwhZbCG+kEAAAAASUVORK5CYII=);
+}
+
+.tail-container {
+    content: '';
+    position: absolute;
+    right: -12px;
+    top: 0px;
+    width: 12px;
+    height: 19px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.msg-in .tail-container {
+    left: -12px;
+    background--image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAmCAMAAADp2asXAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAACQUExURUxpccPDw9ra2m9vbwAAAAAAADExMf///wAAABoaGk9PT7q6uqurqwsLCycnJz4+PtDQ0JycnIyMjPf3915eXvz8/E9PT/39/RMTE4CAgAAAAJqamv////////r6+u/v7yUlJeXl5f///5ycnOXl5XNzc/Hx8f///xUVFf///+zs7P///+bm5gAAAM7Ozv///2fVensAAAAvdFJOUwCow1cBCCnqAhNAnY0WIDW2f2/hSeo99g1lBYT87vDXG8/6d8oL4sgM5szrkgl660OiZwAAAHRJREFUKM/ty7cSggAABNFVUQFzwizmjPz/39k4YuFWtm55bw7eHR6ny63+alnswT3/rIDzUSC7CrAziPYCJCsB+gbVkgDtVIDh+DsE9OTBpCtAbSBAZSEQNgWIygJ0RgJMDWYNAdYbAeKtAHODlkHIv997AkLqIVOXVU84AAAAAElFTkSuQmCC);
+}
+
+.bubble {
+    padding-top: 10px;
+    padding-left: 9px;
+    padding-right: 7px;
+    padding-bottom: 23px;
+    min-width: 110px;
+    box-sizing: border-box;
+}
+
+.msg-text {
+    cursor: text;
+    white-space: pre-wrap;
+    position: relative;
+    font-size: 13.6px;
+    line-height: 19px;
+    word-wrap: break-word;
+    color: #262626;
+}
+
+.msg-metadata {
+    position: absolute;
+    bottom: 4px;
+    right: 5px;
+    font-size: 11px;
+    color: rgba(0,0,0,0.45);
+    line-height: 15px;
+    height: 15px;
+    white-space: nowrap;
+}
+
+.chat-window-container section {
+    padding: 15px;
+    background: rgba(158, 158, 158, 0.09);
+    max-height: 350px;
+    min-height: 350px;
+    overflow-y: auto;
+}
+
+#chatwindow section::-webkit-scrollbar-track
+{
+	border-radius: 0px;
+	background: rgba(245, 245, 245, 0.38);
+}
+
+#chatwindow section::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: rgba(245, 245, 245, 0.38);
+}
+
+#chatwindow section::-webkit-scrollbar-thumb
+{
+	background-color: #9e9e9e;
+}
+
+
+.chat-window-container footer {
+    border: 1px solid rgba(0,0,0,.1);
+    padding: 5px;
+    padding-left: 10px;
+}
+.smily {
+    background: no-repeat url(https://ssl.gstatic.com/chat/babble/sprites/common-517bca7f07a37c64c3263a1411e266a5.png) -217px 0;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.message-type {
+    outline: none;
+    border: none;
+    padding: 15px;
+    width: calc(100% - 25px);
+}
+
+.clear {
+    clear: both;
+}
+
+
+@media (min-width:320px)  { 
+    .chat-window-container.active {
+        max-width: unset;
+        width: calc(100% - 30px);
+    }
+    .chat-window-container section {
+        max-height: calc(100vh - 180px);
+    }
+}
+
+@media (min-width: 600px) {
+    .chat-window-container.active {
+        max-width: 350px;
+        width: auto;
+    }
+    .chat-window-container section {
+        max-height: 350px;
+    }
+}
+
+.chat-bg.offline, .chat-window-container header {
+    background-color: #616161;
+}
+.chat-bg.offline .section {
+    color: #D5D5D5;
+}
+.chat-bg.online, .chat-window-container header, .msg-out {
+    background-color: #1f8ceb
+}
+
+.chat-bg.online .section, .msg-out .msg-text, .msg-out .msg-metadata {
+    color: white;
+}
+
+.chat-interfaceIconFillColor {
+    fill: currentColor;
+}
+
+.message-count {
+    display: none;
+    position: absolute;
+    top: 4px;
+    padding-top: 2px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 15px;
+    vertical-align: middle;
+    color: white;
+    font-weight: bold;
+    left: 7px;
+}
