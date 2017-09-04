@@ -219,7 +219,7 @@ body {
 }
 
 .chat-bg.offline, .chat-window-container header {
-    background-color: #616161;
+    background-color: #27ae60;
 }
 .chat-bg.offline .section {
     color: #D5D5D5;
