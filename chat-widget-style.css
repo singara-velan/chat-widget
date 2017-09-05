@@ -240,7 +240,7 @@ body {
     color: #D5D5D5;
 }
 .chat-bg.online, .chat-window-container header, .msg-out {
-    background-color: #1f8ceb
+    background-color: #27ae60;
 }
 
 .chat-bg.online .section, .msg-out .msg-text, .msg-out .msg-metadata {
