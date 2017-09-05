@@ -19,7 +19,7 @@ body {
 
 .chat-bubble-container.active {
     bottom: 0;
-    transition: unset;
+    transition: bottom 0.6s linear;
 }
 
 .section {
@@ -44,6 +44,7 @@ body {
     max-width: 350px;
     right: -500px;
     position: fixed;
+    transition: right 0.5s ease-out;
 }
 .chat-window-container.active {
     display: block;
@@ -51,7 +52,6 @@ body {
     right: 15px;
     bottom: 15px;
     z-index: 9999;
-    transition: right 2s ease-out;
 }
 .chat-window-container header {
     padding: 10px;
@@ -67,6 +67,26 @@ body {
     height: 24px;
     width: 24px;
     cursor: pointer;
+    display: inline-block;
+}
+
+.resize {
+    width: 19px;
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.full {
+    width: 85vw !important;
+    max-width: unset !important;
+    height: 90vh;
+    left: 9vw;
+    right: 10vw;
+}
+
+.chat-window-container.full section {
+    min-height: calc(80vh - 85px);
 }
 
 .u-name {
@@ -97,10 +117,6 @@ body {
     float: left;
 }
 
-.msg-out .tail-container- {
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAmCAMAAADp2asXAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAADAUExURUxpcXmHa4maet/4yA0aDRMTE8fhsgAAAAAAAMDXrCsxJeX/z1xzXIiYetPsvGBsVUdPPuH8zOH8zNDrvMvmtrrOpwAAAAAAABUVFRoaGtnyxLTMozQ+MMfftFBeSR8nH5aoh6q/mW9+ZN/4yMjhtRwlHAAAAIOWd+r/06C1kkNLOwsLC9z4xur/0+n/0t76x9v4xeL9y+b/z+j/0d/7yeH8yuX/zeD8ytz5xt76yOP/zeH+y+b/zuD8yd35xuf/0MY9jkkAAAAsdFJOUwBvd/ATDZIBAsMp/At/11c9yPbizHoICQwT4bY1ykkgjahl6s8bBYT6nUAWOLbtFAAAAIhJREFUKM/tzbUWwlAURNFBE9zdg0NecLf//yvKUJyUdDnl7HXXletXqmXl9wPbQ9JCcC+VJsOj2mDwovzj3osjHGNFEVxNRAj7UR1hlx+I4FbuC8HkZBE8OwnRxamdFsEmUxCCGdoI51RLBK9xVwTvjyMEbzlDMJMp7lqseNc8YNc6CGyF/a0vcmwhZbCG+kEAAAAASUVORK5CYII=);
-}
-
 .tail-container {
     content: '';
     position: absolute;
@@ -115,7 +131,6 @@ body {
 
 .msg-in .tail-container {
     left: -12px;
-    background--image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAmCAMAAADp2asXAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAACQUExURUxpccPDw9ra2m9vbwAAAAAAADExMf///wAAABoaGk9PT7q6uqurqwsLCycnJz4+PtDQ0JycnIyMjPf3915eXvz8/E9PT/39/RMTE4CAgAAAAJqamv////////r6+u/v7yUlJeXl5f///5ycnOXl5XNzc/Hx8f///xUVFf///+zs7P///+bm5gAAAM7Ozv///2fVensAAAAvdFJOUwCow1cBCCnqAhNAnY0WIDW2f2/hSeo99g1lBYT87vDXG8/6d8oL4sgM5szrkgl660OiZwAAAHRJREFUKM/ty7cSggAABNFVUQFzwizmjPz/39k4YuFWtm55bw7eHR6ny63+alnswT3/rIDzUSC7CrAziPYCJCsB+gbVkgDtVIDh+DsE9OTBpCtAbSBAZSEQNgWIygJ0RgJMDWYNAdYbAeKtAHODlkHIv997AkLqIVOXVU84AAAAAElFTkSuQmCC);
 }
 
 .bubble {
@@ -150,7 +165,7 @@ body {
 
 .chat-window-container section {
     padding: 15px;
-    background: rgba(158, 158, 158, 0.09);
+    background: rgb(244, 244, 244);
     max-height: 350px;
     min-height: 350px;
     overflow-y: auto;
@@ -225,7 +240,7 @@ body {
     color: #D5D5D5;
 }
 .chat-bg.online, .chat-window-container header, .msg-out {
-    background-color: #27ae60
+    background-color: #27ae60;
 }
 
 .chat-bg.online .section, .msg-out .msg-text, .msg-out .msg-metadata {
