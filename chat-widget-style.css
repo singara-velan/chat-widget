@@ -43,6 +43,7 @@ body {
     overflow: hidden;
     max-width: 350px;
     right: -500px;
+    bottom: 15px;
     position: fixed;
     transition: right 0.5s ease-out;
 }
@@ -115,6 +116,14 @@ body {
     border-top-right-radius: 7.5px;
     border-top-left-radius: 0px;
     float: left;
+}
+
+.msg::after{
+    content: "."; 
+    visibility: hidden; 
+    display: block; 
+    height: 0; 
+    clear: both;
 }
 
 .tail-container {
