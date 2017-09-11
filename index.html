@@ -2,123 +2,43 @@
 <html>
 
 <head>
-        <meta name="viewport" content="width=device-width">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="chat-widget-style.css" rel="stylesheet" />
     <script src="lib/jquery-3.2.1.slim.min.js"></script>
 </head>
 
 <body>
-    <h1>I am chat</h1>
-    <div id="chatroot_"></div>
-    <!-- Chat bubble -->
-    <div id="chatbubble" class="chat-bubble-container chat-bg online active">
-        <div class="section">
-            <svg class="chat-interfaceIconFillColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 0h24v24H0V0z" fill="none"></path>
-                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"></path>
-            </svg>
-            <img src="http://supporthelpdesk.co/norton/img/banner-img-girl.png" />
-            <div class="message-count">5</div>
-        </div>
-    </div>
-    <!-- Chat window -->
-    <article id="chatwindow" class="chat-window-container">
-        <header>
-            <div class="avatar">
-                <img src="http://supporthelpdesk.co/norton/img/banner-img-girl.png" />
-            </div>
-            <div class="u-name">Velan</div>
-            <div class="actions">
-                    <img id="resize" class="resize" alt="boxy-01-512 white.png" 
-                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJ4AAACeCAYAAADDhbN7AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAZmSURBVHja7JxPixxFGId/M1smu5k4qKCgeFA8CV48e8gX0LMS8AP4ARL8DF5FUBRECd71Iih69Ci5JQfxIiKIXnQn+0d3xsP2YO8wu9NV1V31VvXzQsiyJM92zftsd1V1/9qtVitRVOpykqaSbkqatL6/knQoaRnAhAevk3h8aPCS81wL8qakdwMPqH1gm9UH7yNJH9LUzvWZpNcG7EcM7w1JD1zrG3NJLxqdEjyJdF71vKSXjPbyuqSpaw3yxPBcFOn8eHuGezmVdNO1Bml5eXuKdF48y3UgaeIiBpn6jId0/jyLNVkvLqxLJ6SrRroLq1qkQ7rkVzCHdFXyzqwvFB3SVcmzvFA8krR0SAcvcS1j5nh3JP0Z+Js1kbS/5UM7voJ3H0m8eO9JujdgPzbrhqQPUiwuPpf0O2cSs7xvEh/fE6nEQxJ4RWyn0NT6eebEo6n182bWxKOpbF7vFG+CdPBSSNcWb6rz56SQDt7g0q3F6/teH00YJ89bPKSDF8tbhIiHdPBiefOYxcUK6eCl4vWRuaAJ8Lx5sZkLmgDPt6IzFzQBXkhFZS5oAryoCr1lNtuYE9IEeD4VnLmgCfCCpVMPmQuaAM+3ojMXNAFeSEVlLmgCvCyLiwVNgJdDPJoAL4t4NAHeJs+ceDSVzEVy8WgqTyLvFI/MBbwk0rXFs5q5OJD0dcOZbuEtFf4ajTHwXm8+czIXnqw9SbdE9d1fU5mLTyV90RzMrn26Q6urJSrL5fpXSY93ZDxai7eG/KPzl1wXvVqiLtRM0l+J5oiHoYsLixNXznhxVUTmgnf61lumMxdIh3TJ+ms9c7HEm/qkW8/xqkqoUxfK7FNEzrB0hzp/ty4VXmZPKs6wdL68jyX9JunaFt6pwu8gWOM9I+mdgURN1l9XiXSS9Imkh6r/XukrA4mXdLyuEumkJqFeuXQq/Uwnj8xFUQn1EUg3LV26LuIVm9usWLqD0qXbJR7S1X0bMet4HdIVJV01L9F0FU2sj5CunPG6ilZzY5FuWbp0m+KxhVDG5fqohvE6pBvtHDErzyEdkuTgObFZiiQZeE6VJdRp6oVKmbmQr3iWmzBFujpvI44hc8Fbm8hcIB3S1Z+5QDoyF8G8BdJFFZmLQN4NpIsqMhfwkktn+krhaCrS5RgvmQukyzJeMhdlnjmLlq6LeGwhkLkYhEfmorw5IpkLpMvKK1a6y8Qjc4F0g/PIXJC5IHNR+xZCTzwyF0gHL5RH5gJJsvDIXCBJFh6ZCzIXWY6PzAWZiyzjJXNRr3SyPF4yF0iXZbxkLpAuy3jJXNQrnUTmIphH5iKuyFzASy6d6SsFmQukyzJeMhdIl2W8ZC7KPHMWLV0X8dhCIHMxCI/MRXlzRDIXSJeVV6x0l4lH5gLpBueRuSBzQeai9i2EnnhkLpAOXiiPzAWSZOGRuUCSLDwyF2QushwfmQsyF1nGS+aiXulkebxkLpAuy3jJXCBdlvGSuahXOonMRTDPJ3PxlaTTK7ZhYs+eVniPefwcMhcJeM+KKmZOXFPmgipoIeaQjhKZC6Qbg3RdxEM6pBuE55AO6XL01yEd0uXob1u8pyQ9p/8jdNON/aB2puGBpDOkQ7qGN5f08hW+tOsnScdt8W5Ler/jD3ta0h9Ih3QNby7ph47/51VJ99viTQwO8ljS263j29/CO27+9q0x8BaJL6+dq525uG7wN+tfSffEk74l8LzF41EkeH3wvMVDOnixvEWIeEgHL5Y3D53jBZ0uaQI89ZC5OEE6eKl47czFig8N3sA8qXlzq+NDg5dQOqmQzAW8uqTburjwqdnGnJAmwPOpVah4NAFesHTyzFxcCqEJ8DzqSB6ZC6SD11d1zlwgHbzeK1S8BU2Al0M8mgAvi3g0Ad4mz5x4NLV+3syaeDSVJ5F3ijdBOngppGuLZzVzAa9C6dbikbmA1wfPWzykgxfLI3MBLwuPzAW8MnhkLuBl4YVmLu5KetQczLUtB3Wq8Nc2bON9K+l7mtqZd1vSCwP2Y5O378GMylzcUdo6CRBvzGemtyTdks2KylxYLy6HxsshHdJlqJVDuip5Z5alUw+ZC6SzyVsZ7lN05gLp6uGlrKjMBdIh3agXF0hX6DulHdIhXW7xfpH0XfP1RNLeln9/pvAd8Bjez0jnxftx4H7E8P7eFO/L5g9NLZ931/p4/xsAFUSLg3clSogAAAAASUVORK5CYII=" />
-                <div id="closeBtn" class="close"></div>
-            </div>
-            <div class="clear"></div>
-        </header>
-        <section>
-            <div class="msg">
-                <div class="msg-out">
-                    <div>
-                        <span class="tail-container"></span>
-                        <div class="bubble">
-                            <div class="msg-text">hi, how are you</div>
-                            <div class="msg-metadata"><span>10:00 pm</span></div>
-                        </div>
-                    </div>
+    <h1>I am chat <input type="text" placeholder="bot reply. Type and enter" onkeypress="reply(event)" /></h1>
 
+    <div id="chatroot"></div>
 
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div class="msg">
-                <div class="msg-out">
-                    <div>
-                        <span class="tail-container"></span>
-                        <div class="bubble">
-                            <div class="msg-text">hi, how are you</div>
-                            <div class="msg-metadata"><span>10:00 pm</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div class="msg">
-                <div class="msg-in">
-                    <div>
-                        <span class="tail-container"></span>
-                        <div class="bubble">
-                            <div class="msg-text">I am very long text; I am very long text; I am very long text;</div>
-                            <div class="msg-metadata"><span>10:00 pm</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div class="msg">
-                <div class="msg-in">
-                    <div>
-                        <span class="tail-container"></span>
-                        <div class="bubble">
-                            <div class="msg-text">hi, how are you</div>
-                            <div class="msg-metadata"><span>10:00 pm</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div class="msg">
-                <div class="msg-out">
-                    <div>
-                        <span class="tail-container"></span>
-                        <div class="bubble">
-                            <div class="msg-text">I am very long text; I am very long text; I am very long text;</div>
-                            <div class="msg-metadata"><span>10:00 pm</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div class="msg">
-                    <div class="msg-in">
-                        <div>
-                            <span class="tail-container"></span>
-                            <div class="bubble">
-                                <div class="msg-text">I am short;</div>
-                                <div class="msg-metadata"><span>10:00 pm</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-                </div>
+    <script src="chat-plugin.js"></script>
+    
+    <script>
+        var chat = $('#chatroot').chatwidget({
+            username: 'Singa',
+            uid: '12377',
+            messageOut: msgOut
+        })
 
-        </section>
-        <footer>
-            <div class="smily"></div>
-            <input type="text" placeholder="send message" class="message-type" />
-        </footer>
-    </article>
-    <script src="chat-widget.js"></script>
+        function msgOut(data) {
+            console.log(data);
+        }
+
+        function reply(e) {
+            var el = $(e.target);
+            if ((e.keyCode || e.which) == 13) {
+                var date = new Date();
+                date = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+                $('#chatroot').chatwidget.messageIn({
+                    msg: el.val(),
+                    timestamp: date
+                });
+                el.val("")
+            }
+        }
+    </script>
 </body>
 
 </html>

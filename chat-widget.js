@@ -1,26 +1,15 @@
 (function () {
     'use strict'
 
-    
-    function toggleChat() {
-        $('#chatbubble').toggleClass('active');
-        $('#chatwindow').toggleClass('active');
-        $('#chatwindow').removeClass('full');
-    }
-
-    $("#chatbubble, #closeBtn").on('click', function (event) {
-        toggleChat();
-    });
-    $("#resize").on('click', function (event) {
-        $('#chatwindow').toggleClass('full');
-    });
-
     // widget script starts here;
 
     var mountEl = $('#chatroot'), // a div with id='chatroot' is required to bootstrap the chat widget.
-        chatbubbleContainerEl, chatWindowContainerEl, clearEl,
+        chatbubbleContainerEl, chatWindowContainerEl, clearEl, chatSectionContainerEl,
+        chatWelcomeContainerEl,
         chatSvg, avatarImgUrl = 'http://supporthelpdesk.co/norton/img/banner-img-girl.png',
-        username = 'velan';
+        username = 'velan',
+        uId = 'chatFi',
+        chatHS;
 
     if (mountEl.length == 0) {
         console.log("root element not found to bootstrap");
@@ -37,6 +26,32 @@
     chatbubbleContainerEl = $('<div id="chatbubble" class="chat-bubble-container chat-bg online active" />');
 
     chatbubbleContainerEl.append(chatSvg);
+
+    // chat welcome container
+    chatWelcomeContainerEl = $('<article id="chatWelcomeContainer" class="chat-welcome-container">');
+    chatWelcomeContainerEl.append(createWelcomeSection());
+
+    function createWelcomeSection() {
+        var section = $('<section>'),
+            msg, reply, inputEl;
+        section.append('<div id="wlclose" class="wlc-close">');
+        msg = $('<div class="wlcMsg">');
+        section.append(msg);
+        reply = $('<div class="reply">');
+        inputEl = $('<input id="welMsg" type="text" placeholder="Write Reply">');
+        inputEl.on('keypress', function (e) {
+            if ((e.keyCode || e.which) == 13) {
+                sendChat($(this).val());
+                $(this).val("");
+                hidePrompt();
+                toggleChat();
+            }
+        });
+        reply.append(inputEl);
+        reply.append('<span class="send">');
+        section.append(reply);
+        return section;
+    }
 
     //chat window container
     chatWindowContainerEl = $('<article id="chatwindow" class="chat-window-container">');
@@ -57,59 +72,170 @@
     }
 
     function createMessageSection() {
-        var section = $("<section id='chatSection'>");
-        //dummy message for testing
-        section.append(
-            createMessages('in', {
-                'msg': 'hi',
-                'time': '10:00pm'
-            })
-        );
-        section.append(
-            createMessages('out', {
-                'msg': 'hi',
-                'time': '10:00pm'
-            }));
+        chatSectionContainerEl = $("<section id='chatSection'>");
 
-        return section;
+        return chatSectionContainerEl;
     }
 
-    function createMessages(type, data) {
+    function createMessages(data) {
         var msgContainerEl = $('<div class="msg">');
-        if (type === 'in') {
+        if (data.type === 'in') {
             var msgOutContainerEl = $('<div class="msg-in">');
             msgOutContainerEl.append('<div><span class="tail-container"></span></div>');
             msgOutContainerEl.append(createMessageDataEl(data));
             msgContainerEl.append(msgOutContainerEl);
 
-        } else if (type === 'out') {
+        } else if (data.type === 'out') {
             var msgOutContainerEl = $('<div class="msg-out">');
             msgOutContainerEl.append('<div><span class="tail-container"></span></div>');
             msgOutContainerEl.append(createMessageDataEl(data));
             msgContainerEl.append(msgOutContainerEl);
         }
 
-        return msgContainerEl;
+        chatSectionContainerEl.append(msgContainerEl);
     }
 
     function createMessageDataEl(data) {
         var dataEl = '<div class="bubble">' +
             '<div class="msg-text">' + data.msg + '</div>' +
-            '<div class="msg-metadata"><span>' + data.time + '</span></div>' +
+            '<div class="msg-metadata"><span>' + data.timestamp + '</span></div>' +
             '</div>';
         return dataEl;
     }
 
-    function createFooterEl(){
+    function createFooterEl() {
         var footerEl = $('<footer>'),
-        inputEl;
+            inputEl;
         footerEl.append('<div class="smily">');
-        inputEl = $('<input type="text" placeholder="send message" class="message-type">');
+        inputEl = $('<input id="inMsg" type="text" placeholder="send message" class="message-type">');
+        inputEl.on('keypress', function (e) {
+            if ((e.keyCode || e.which) == 13) {
+                sendChat($(this).val());
+                $(this).val("");
+            }
+        });
         footerEl.append(inputEl);
         return footerEl;
+    }
+
+    function loadChatHistory(uId) {
+        var data = localStorage.getItem('sweeChatHS');
+        if (data) {
+            data = JSON.parse(data);
+            if (data.chatId == uId) {
+                chatHS = data;
+                data.msgs.forEach(function (val) {
+                    createMessages(val);
+                });
+                scrollDown();
+                if (data.msgs.length === 0) {
+                    showPrompt();
+                }
+            } else {
+                initChatHistory(uId);
+                console.log("Provided chat id and stored chat session id is mismatching. So started new Session");
+            }
+        } else {
+            initChatHistory(uId);
+            console.log('doesn"t having chat history in session. Started new Session.');
+        }
 
     }
 
-    mountEl.append(chatbubbleContainerEl, chatWindowContainerEl);
+    function initChatHistory(uId) {
+        var objHS = {
+            chatId: uId,
+            msgs: []
+        }
+        localStorage.setItem('sweeChatHS', JSON.stringify(objHS));
+        showPrompt();
+    }
 
+    function updateChatHistory(msg) {
+        var objHS = localStorage.getItem('sweeChatHS');
+        if (objHS) {
+            objHS = JSON.parse(objHS);
+            if (objHS.msgs && objHS.msgs.length >= 0) {
+                objHS.msgs.push(msg);
+            } else {
+                objHS.msgs = [msg];
+            }
+            localStorage.setItem('sweeChatHS', JSON.stringify(objHS));
+        }
+    }
+
+    function sendChat(msg) {
+        var date = new Date();
+        var payload = {
+            'type': 'out',
+            'msg': msg,
+            'timestamp': date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes()
+        }
+        msgOut(payload);
+
+    }
+
+    function scrollDown() {
+        setTimeout(function () {
+            $(chatSectionContainerEl).scrollTop(chatSectionContainerEl[0].clientHeight + chatSectionContainerEl[0].scrollHeight);
+        }, 100)
+    };
+
+    mountEl.append(chatbubbleContainerEl, chatWelcomeContainerEl, chatWindowContainerEl);
+
+    // dom managing events
+
+    function toggleChat() {
+        $('#chatbubble').toggleClass('active');
+        $('#chatwindow').toggleClass('active');
+        $('#chatwindow').removeClass('full');
+    }
+
+    function showPrompt() {
+        $('#chatWelcomeContainer').addClass('active');
+        $('#chatwindow').removeClass('active');
+        $('#chatbubble').removeClass('active');
+    }
+
+    function hidePrompt() {
+        $('#chatWelcomeContainer').removeClass('active');
+        $('#chatbubble').addClass('active');
+    }
+
+    $("#chatbubble, #closeBtn").on('click', function (event) {
+        toggleChat();
+    });
+    $("#resize").on('click', function (event) {
+        $('#chatwindow').toggleClass('full');
+    });
+
+    $('#wlclose').on('click', function (event) {
+        hidePrompt();
+    });
+
+    loadChatHistory(uId);
+
+    // public methods
+
+    function msgIn(payload) {
+        payload.type = 'in';
+        createMessages(payload);
+        updateChatHistory(payload);
+        scrollDown();
+        if(!$('#chatwindow').hasClass('active')){
+            toggleChat();
+        }
+    }
+
+    function msgOut(payload) {
+        payload.type = 'out';
+        createMessages(payload);
+        updateChatHistory(payload);
+        scrollDown();
+        window.messageOut = payload;
+    }
+
+
+    window.messageIn = msgIn;
+    
 })()
