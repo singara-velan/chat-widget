@@ -1,50 +1,100 @@
-# chat-widget
 
-# add below references in head 
+Chat Widget
+-------------------
+A simplified customizable and easily embeddable chat UI for chat bot solutions.
 
-    <link href="https://singara-velan.github.io/chat-widget/chat-widget-style.css" rel="stylesheet" />
-    <script src="https://singara-velan.github.io/chat-widget/lib/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://singara-velan.github.io/chat-widget/chat-plugin.js"></script> 
+Usage
+----------
+It is very simple to integrate into any website.
 
-# add below code in your body
+> **Add the below scripts and a stylesheet in the head of your website**
+```
+<link href="https://singara-velan.github.io/chat-widget/chat-widget-style.css" rel="stylesheet" />
 
- <div id="chatroot"></div>
+<script src="https://singara-velan.github.io/chat-widget/chat-plugin.js"></script>
+```
+**If your site already having Jquery, below reference not required**
+```
+<script src="https://singara-velan.github.io/chat-widget/lib/jquery-3.2.1.slim.min.js"></script>
+```
 
-    <script>
-        var chat = $('#chatroot').chatwidget({
-            username: 'Singa',
-            uid: '12377',
-            messageOut: msgOut
-        })
+> **Add the below script in the html and script in body for testing**
+```
+<div class="chatroot"></div>
+```
+```
+var chat = $('#chatroot').chatwidget({
+   username: 'Singa',
+   uid: '12377',
+   messageOut: msgOut
+})
 
-        function msgOut(data) {
-            console.log(data);
-        }
+// calls everytime user sends/responds in the chat
+function msgOut(data) {
+	console.log(data);
+}
+```
+```
+ // way to push bot/agents messages into the chat.
+  $('#chatroot').chatwidget.messageIn(payload);
+  payload: {
+	  msg: 'hey, how are you!',
+      timestamp: 'date time'
+  }
+```
 
-    </script>
+### Documentation
 
-# Documentation
+### Initialization
 
-# Initialization:
+> **With Default Options**
+```
+$('#chatroot').chatwidget();
+```
+> **With Custom Options**
+```
+$('#chatroot').chatwidget(options);
 
-    with default settings:
+options = {
+	username: 'Singa',
+    uid: '12377',
+    messageOut: msgOut
+};
+```
+### Options
 
-    $('#chatroot').chatwidget();
+List of supported options.
 
-    with custom settings:
+| Option | Description| Sample data|
+| :------- | ----: | :---: |
+| username | The name of your agent/bot |  `Help Desk`|
+| avatarImgSource| face for your agent/bot |  http://supporthelpdesk.co/norton/img/banner-img-girl.png`   
+|
+| uId| chat id    | `123889` |
+|welcomeMessage| Auto greeting message for new users. | `Hi, how may i assist you!` |
+|sessionTimeout| If the chat is idle for "sessionTimeout" duration, chat session will end. | `30` mins. default value.
+|messageOut| call back function. will be called everytime users sends/responds in chat | `function msgOut(payload){}`
 
-    $('#chatroot').chatwidget(options);
+### Communication: IN & OUT
+This section explains, how we can establish the communication between chat bot/agent with the site visitor/user.
 
-    options = {
-        username: 'Singa',
-        uid: '12377',
-        messageOut: msgOut
-    }
+Chat widget exposes two methods.
 
-    option parameters:
+ 1. **messageOut** 
 
-    1. username --> it wil be show up in the chat window.
-    2. uid --> unique id. Responsible for session maintanence.
-    3. messageOut --> call back function. will be called everytime sends a message.
-    4. avatarImgSource --> agent/bot image 
-    5. 
+ It is a callback function. Has to be passed as part of options. The widget will call this function every time the user sends a message with a **payload**.
+
+    If call back function not passed, user responses will be assigned in a window object as **window.messageOut**
+
+ 2.  **messageIn**
+ 
+ It is a method, needs to be called with a **payload**, a message object.  
+`$('#chatroot').chatwidget.messageIn(payload);`
+
+> **Payload**
+> it is a json object with the following properties. 
+> ``` {
+	msg: 'message string',
+	timestamp: 'time which will be displayed under each message'
+	   }
+ ```
