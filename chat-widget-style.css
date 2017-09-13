@@ -242,7 +242,7 @@ body {
     box-shadow: 0 2px 8px 0 rgba(35, 47, 53, .09);
     border-radius: 5px;
     max-width: 320px;
-    min-width: 320px;
+    min-width: 100px;
 }
 
 .chat-welcome-container section:hover .wlc-close {
