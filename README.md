@@ -92,8 +92,10 @@ Chat widget exposes two methods.
 
 > **Payload**
 > it is a json object with the following properties. 
-> ``` {
-	msg: 'message string',
-	timestamp: 'time which will be displayed under each message'
-	   }
+> 
+``` 
+{
+  msg: 'message string',
+  timestamp: 'time which will be displayed under each message'
+}
  ```
