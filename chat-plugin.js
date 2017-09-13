@@ -3,7 +3,7 @@
     $.fn.chatwidget = function (options) {
 
         var mountEl, chatbubbleContainerEl, chatWindowContainerEl, clearEl, chatSectionContainerEl,
-            chatWelcomeContainerEl, chatHS, chatSvg
+            chatWelcomeContainerEl, chatHS, chatSvg, welcomeMsg;
 
         mountEl = this;
 
@@ -19,7 +19,8 @@
             avatarImgSource: 'http://supporthelpdesk.co/norton/img/banner-img-girl.png',
             uId: 'chatFi',
             debug: true,
-            welcomeMessage: ' Hello, Talk to us. We are here to help you! '
+            welcomeMessage: ' Hello, Talk to us. We are here to help you! ',
+            sessionTimeout: 30 //mins,
         }, options);
 
         chatSvg = '<div class="section"><svg class="chat-interfaceIconFillColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">' +
@@ -28,6 +29,7 @@
             '</svg></div>'
 
         settings.chatSvg = chatSvg;
+        //settings.uId += '-' + new Date().getTime();
 
         createDom();
 
@@ -44,6 +46,7 @@
             var chatBubbleEl = $('<div id="chatbubble" class="chat-bubble-container chat-bg online active" />');
             chatBubbleEl.on('click', function () {
                 toggleChat();
+                hidePrompt();
             });
             chatBubbleEl.append(chatSvg);
             return chatBubbleEl;
@@ -63,8 +66,8 @@
             close.on('click', function () {
                 hidePrompt();
             });
-            msg = $('<div class="wlcMsg">');
-            msg.html(settings.welcomeMessage);
+            welcomeMsg = $('<div class="wlcMsg">');
+            welcomeMsg.html(settings.welcomeMessage);
             actionContainer = $('<div class="reply">');
             inputEl = $('<input id="welMsg" type="text" placeholder="Write Reply">');
             inputEl.on('keypress', function (e) {
@@ -86,7 +89,7 @@
 
             actionContainer.append(inputEl);
             actionContainer.append(reply);
-            section.append(close, msg, actionContainer);
+            section.append(close, welcomeMsg);
             return section;
         }
 
@@ -181,16 +184,25 @@
 
         function loadChatHistory(uId) {
             var data = localStorage.getItem('sweeChatHS');
+            var msgLen;
             if (data) {
                 data = JSON.parse(data);
                 if (data.chatId == uId) {
                     chatHS = data;
-                    data.msgs.forEach(function (val) {
-                        createMessages(val);
-                    });
-                    scrollDown();
-                    if (data.msgs.length === 0) {
-                        showPrompt();
+                    msgLen = data.msgs.length - 1;
+
+                    if ((new Date().getTime() - data.msgs[msgLen].createdTime) >= settings.sessionTimeout * 60000) {
+                        console.log('session expired. So creating new sesion');
+                        initChatHistory(uId);
+                    } else {
+                        if (data.msgs[msgLen].type === 'in') {
+                            showPrompt(data.msgs[msgLen].msg);
+                        }
+
+                        data.msgs.forEach(function (val) {
+                            createMessages(val);
+                        });
+                        scrollDown();
                     }
                 } else {
                     initChatHistory(uId);
@@ -208,8 +220,15 @@
                 chatId: uId,
                 msgs: []
             }
+            var msg = {
+                type: 'in',
+                msg: settings.welcomeMessage,
+                timestamp: 'now',
+                createdTime: new Date().getTime()
+            }
+            objHS.msgs.push(msg);
             localStorage.setItem('sweeChatHS', JSON.stringify(objHS));
-            showPrompt();
+            loadChatHistory(uId);
         }
 
         function updateChatHistory(msg) {
@@ -253,15 +272,16 @@
             $('#chatwindow').removeClass('full');
         }
 
-        function showPrompt() {
+        function showPrompt(data) {
             $('#chatWelcomeContainer').addClass('active');
             $('#chatwindow').removeClass('active');
-            $('#chatbubble').removeClass('active');
+            if (data) {
+                welcomeMsg.html(data);
+            }
         }
 
         function hidePrompt() {
             $('#chatWelcomeContainer').removeClass('active');
-            $('#chatbubble').addClass('active');
         }
 
         // public methods
@@ -271,6 +291,7 @@
 
         function msgIn(payload) {
             payload.type = 'in';
+            payload.createdTime = new Date().getTime();
             createMessages(payload);
             updateChatHistory(payload);
             scrollDown();
@@ -281,6 +302,7 @@
 
         function msgOut(payload) {
             payload.type = 'out';
+            payload.createdTime = new Date().getTime();
             createMessages(payload);
             updateChatHistory(payload);
             scrollDown();
