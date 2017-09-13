@@ -68,9 +68,8 @@ List of supported options.
 | Option | Description| Sample data|
 | :------- | ----: | :---: |
 | username | The name of your agent/bot |  `Help Desk`|
-| avatarImgSource| face for your agent/bot |  http://supporthelpdesk.co/norton/img/banner-img-girl.png`   
-|
-| uId| chat id    | `123889` |
+| avatarImgSource| face for your agent/bot |  http://supporthelpdesk.co/norton/img/banner-img-girl.png`|
+| uId | chat id    | `123889` |
 |welcomeMessage| Auto greeting message for new users. | `Hi, how may i assist you!` |
 |sessionTimeout| If the chat is idle for "sessionTimeout" duration, chat session will end. | `30` mins. default value.
 |messageOut| call back function. will be called everytime users sends/responds in chat | `function msgOut(payload){}`
