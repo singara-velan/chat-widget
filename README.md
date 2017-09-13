@@ -46,3 +46,5 @@
     1. username --> it wil be show up in the chat window.
     2. uid --> unique id. Responsible for session maintanence.
     3. messageOut --> call back function. will be called everytime sends a message.
+    4. avatarImgSource --> agent/bot image 
+    5. 
