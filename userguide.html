@@ -1,0 +1,154 @@
+<h2 id="chat-widget">Chat Widget</h2>
+
+<p>A simplified customizable and easily embeddable chat UI for chat bot solutions.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>It is very simple to integrate into any website.</p>
+
+<blockquote>
+  <p><strong>Add the below scripts and a stylesheet in the head of your website</strong></p>
+</blockquote>
+
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"https://singara-velan.github.io/chat-widget/chat-widget-style.css"</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> /&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://singara-velan.github.io/chat-widget/chat-plugin.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span></code></pre>
+
+<p><strong>If your site already having Jquery, below reference not required</strong></p>
+
+
+
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"https://singara-velan.github.io/chat-widget/lib/jquery-3.2.1.slim.min.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span></code></pre>
+
+<blockquote>
+  <p><strong>Add the below script in the html and script in body for testing</strong></p>
+</blockquote>
+
+
+
+<pre class="prettyprint"><code class=" hljs applescript">&lt;<span class="hljs-keyword">div</span> <span class="hljs-type">class</span>=<span class="hljs-string">"chatroot"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+
+
+
+<pre class="prettyprint"><code class=" hljs javascript"><span class="hljs-keyword">var</span> chat = $(<span class="hljs-string">'#chatroot'</span>).chatwidget({
+   username: <span class="hljs-string">'Singa'</span>,
+   uid: <span class="hljs-string">'12377'</span>,
+   messageOut: msgOut
+})
+
+<span class="hljs-comment">// calls everytime user sends/responds in the chat</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">msgOut</span><span class="hljs-params">(data)</span> {</span>
+    console.log(data);
+}</code></pre>
+
+
+
+<pre class="prettyprint"><code class=" hljs ruby"> /<span class="hljs-regexp">/ way to push bot/agents</span> messages into the chat.
+  <span class="hljs-variable">$(</span><span class="hljs-string">'#chatroot'</span>).chatwidget.messageIn(payload);
+  <span class="hljs-symbol">payload:</span> {
+      <span class="hljs-symbol">msg:</span> <span class="hljs-string">'hey, how are you!'</span>,
+      <span class="hljs-symbol">timestamp:</span> <span class="hljs-string">'date time'</span>
+  }</code></pre>
+
+<h3 id="documentation">Documentation</h3>
+
+
+
+<h3 id="initialization">Initialization</h3>
+
+<blockquote>
+  <p><strong>With Default Options</strong></p>
+</blockquote>
+
+
+
+<pre class="prettyprint"><code class=" hljs ruby"><span class="hljs-variable">$(</span><span class="hljs-string">'#chatroot'</span>).chatwidget();</code></pre>
+
+<blockquote>
+  <p><strong>With Custom Options</strong></p>
+</blockquote>
+
+
+
+<pre class="prettyprint"><code class=" hljs ruby"><span class="hljs-variable">$(</span><span class="hljs-string">'#chatroot'</span>).chatwidget(options);
+
+options = {
+    <span class="hljs-symbol">username:</span> <span class="hljs-string">'Singa'</span>,
+    <span class="hljs-symbol">uid:</span> <span class="hljs-string">'12377'</span>,
+    <span class="hljs-symbol">messageOut:</span> msgOut
+};</code></pre>
+
+<h3 id="options">Options</h3>
+
+<p>List of supported options.</p>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Option</th>
+  <th align="right">Description</th>
+  <th align="center">Sample data</th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">username</td>
+  <td align="right">The name of your agent/bot</td>
+  <td align="center"><code>Help Desk</code></td>
+</tr>
+<tr>
+  <td align="left">avatarImgSource</td>
+  <td align="right">face for your agent/bot</td>
+  <td align="center"><a href="http://supporthelpdesk.co/norton/img/banner-img-girl.png">http://supporthelpdesk.co/norton/img/banner-img-girl.png</a>`</td>
+</tr>
+<tr>
+  <td align="left">uId</td>
+  <td align="right">chat id</td>
+  <td align="center"><code>123889</code></td>
+</tr>
+<tr>
+  <td align="left">welcomeMessage</td>
+  <td align="right">Auto greeting message for new users.</td>
+  <td align="center"><code>Hi, how may i assist you!</code></td>
+</tr>
+<tr>
+  <td align="left">sessionTimeout</td>
+  <td align="right">If the chat is idle for “sessionTimeout” duration, chat session will end.</td>
+  <td align="center"><code>30</code> mins. default value.</td>
+</tr>
+<tr>
+  <td align="left">messageOut</td>
+  <td align="right">call back function. will be called everytime users sends/responds in chat</td>
+  <td align="center"><code>function msgOut(payload){}</code></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h3 id="communication-in-out">Communication: IN &amp; OUT</h3>
+
+<p>This section explains, how we can establish the communication between chat bot/agent with the site visitor/user.</p>
+
+<p>Chat widget exposes two methods.</p>
+
+<ol>
+<li><p><strong>messageOut</strong> </p>
+
+<p>It is a callback function. Has to be passed as part of options. The widget will call this function every time the user sends a message with a <strong>payload</strong>.</p>
+
+<p>If call back function not passed, user responses will be assigned in a window object as <strong>window.messageOut</strong></p></li>
+<li><p><strong>messageIn</strong></p>
+
+<p>It is a method, needs to be called with a <strong>payload</strong>, a message object. <br>
+<code>$('#chatroot').chatwidget.messageIn(payload);</code></p></li>
+</ol>
+
+<blockquote>
+  <p><strong>Payload</strong> <br>
+  it is a json object with the following properties.  <br>
+  <code>{ <br>
+      msg: 'message string', <br>
+      timestamp: 'time which will be displayed under each message' <br>
+         } <br>
+  </code></p>
+</blockquote>
