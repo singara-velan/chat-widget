@@ -2,6 +2,10 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+* {
+   box-sizing: border-box; 
+}
+
 .chat-bubble-container {
     padding: 18px;
     border-radius: 50%;
@@ -93,7 +97,7 @@ body {
 }
 
 .chat-window-container.full section {
-    min-height: calc(80vh - 85px);
+    min-height: calc(80vh - 60px);
 }
 
 .u-name {
@@ -219,8 +223,10 @@ body {
     outline: none;
     border: none;
     padding: 15px;
+    line-height: 20px;
     width: calc(100% - 40px);
     display: inline-block;
+    color: black;
 }
 
 .clear {
