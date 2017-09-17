@@ -68,6 +68,7 @@ List of supported options.
 | Option | Description| Sample data|
 | :------- | ----: | :---: |
 | username | The name of your agent/bot |  `Help Desk`|
+| designation | Designation |  `Insurance Assistant`|
 | avatarImgSource| face for your agent/bot |  http://supporthelpdesk.co/norton/img/banner-img-girl.png`|
 | uId | chat id    | `123889` |
 |welcomeMessage| Auto greeting message for new users. | `Hi, how may i assist you!` |
