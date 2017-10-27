@@ -31,10 +31,19 @@
             if ((e.keyCode || e.which) == 13) {
                 var date = new Date();
                 date = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-                $('#chatroot').chatwidget.messageIn({
-                    msg: el.val(),
+                $('#chatroot').chatwidget.messageIn([
+                {
+                    msg: 'Text message',
                     timestamp: date
-                });
+                },    
+                {
+                    timestamp: date,
+                    struct_type: 'CARD',
+                    title: 'Card Titile',
+                    caption: 'Card Caption',
+                    img_link: 'http://www.iolo-staging.sg/images/banner01.jpg',
+                    dest_link: 'http://www.iolo-staging.sg'
+                },]);
                 el.val("")
             }
         }
