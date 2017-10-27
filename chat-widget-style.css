@@ -137,6 +137,7 @@ body {
     border-top-right-radius: 7.5px;
     border-top-left-radius: 0px;
     float: left;
+    overflow: hidden;
 }
 
 .msg::after {
@@ -170,6 +171,35 @@ body {
     padding-bottom: 23px;
     min-width: 110px;
     box-sizing: border-box;
+}
+
+.bubble.fill {
+    padding: 0;
+}
+
+.bubble a {
+    text-decoration: none;
+    color: initial;
+}
+
+.bubble a:hover figure {
+    opacity: 0.5;
+    transition: all 0.9s ease;
+}
+
+.bubble figure {
+    margin: 0;
+}
+
+.bubble figure .title {
+    font-weight: bold;   
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.bubble figcaption {
+    font-size: 13px;    
+    margin: 10px;
 }
 
 .msg-text {

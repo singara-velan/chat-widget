@@ -157,17 +157,21 @@
             avatarContainerEl.append(avatarEl);
             var avatarlTitleEl = _createElement('div');
             avatarlTitleEl
-                .attr({class: 'u-name'})
+                .attr({
+                    class: 'u-name'
+                })
                 .html(settings.username);
             var avatarDesingationEl = _createElement('div');
             avatarDesingationEl
-                .attr({class: 'd-name'})
+                .attr({
+                    class: 'd-name'
+                })
                 .html(settings.designation);
 
             var actionsContainerEl = _createElement('div');
             actionsContainerEl.attr('class', 'actions');
 
-            
+
             // resize button
             resize = _createElement('img');
             resize.attr({
@@ -205,7 +209,11 @@
             if (data.type === 'in') {
                 var msgOutContainerEl = $('<div class="msg-in">');
                 msgOutContainerEl.append('<div><span class="tail-container"></span></div>');
-                msgOutContainerEl.append(createMessageDataEl(data));
+                if (data.struct_type === 'CARD') {
+                    msgOutContainerEl.append(createMessageLinkEl(data));
+                } else {
+                    msgOutContainerEl.append(createMessageDataEl(data));
+                }
                 msgContainerEl.append(msgOutContainerEl);
 
             } else if (data.type === 'out') {
@@ -224,6 +232,24 @@
                 '<div class="msg-metadata"><span>' + data.timestamp + '</span></div>' +
                 '</div>';
             return dataEl;
+        }
+
+        function createMessageLinkEl(data) {
+            var figEl, linkEl = '<div class="bubble fill">' +
+                '<a href="' + data.dest_link + '" target="_blank"><figure>';
+            if (data.img_link && data.img_link.length > 0) {
+                linkEl += '<img src="' + data.img_link + '" alt="Img holder" style = "max-width: 100%"/>';
+            }
+            if(data.title || data.caption) {
+                linkEl +=   '<figcaption>';
+                linkEl +=  data.title && data.title.length > 0 ? '<div class="title">' + data.title + '</div>' : '';
+                linkEl +=  data.caption && data.caption.length > 0 ? '<span>' +  data.caption + '</span>': '';
+                linkEl += '</figcaption>';
+            }
+
+            linkEl += '</figure></a>'
+            linkEl += '</div>'
+            return linkEl;
         }
 
         function createFooter() {
@@ -369,6 +395,17 @@
         // public methods
 
         function msgIn(payload) {
+            if (payload instanceof Array) {
+                payload.forEach(function (val) {
+                    renderInputMessage(val);
+                });
+
+            } else {
+                renderInputMessage(payload);
+            }
+        }
+
+        function renderInputMessage(payload) {
             payload.type = 'in';
             payload.createdTime = new Date().getTime();
             createMessages(payload);
